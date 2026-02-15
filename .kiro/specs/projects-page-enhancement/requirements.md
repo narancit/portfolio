@@ -54,6 +54,19 @@ Update the Projects section to display only the 3 most recent projects on the ho
 - 6.4 Empty states are handled gracefully
 - 6.5 Responsive design works on mobile, tablet, and desktop
 
+## Non-Functional Requirements
+
+### 7. Performance
+**Acceptance Criteria:**
+- 7.1 Both pages use static generation (no client-side data fetching)
+- 7.2 Projects page loads within acceptable performance budgets
+- 7.3 No unnecessary re-renders or client-side JavaScript
+
+### 8. Browser Compatibility
+**Acceptance Criteria:**
+- 8.1 Works correctly in Chrome, Firefox, Safari, and Edge (latest versions)
+- 8.2 Mobile browsers supported (iOS Safari, Chrome Android)
+
 ## Out of Scope
 - Individual project detail pages (like blog post pages)
 - Filtering or search functionality

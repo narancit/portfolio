@@ -7,9 +7,10 @@ import Image from 'next/image';
 
 interface ProjectCardProps {
   project: Project;
+  showLongDescription?: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, showLongDescription = false }: ProjectCardProps) {
   return (
     <Card className="group h-full flex flex-col transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20">
       {project.imageUrl && (
@@ -31,6 +32,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <CardDescription className="text-muted-foreground">
           {project.description}
         </CardDescription>
+        {showLongDescription && project.longDescription && (
+          <CardDescription className="text-muted-foreground mt-2">
+            {project.longDescription}
+          </CardDescription>
+        )}
       </CardHeader>
       
       <CardContent className="flex-1">

@@ -43,31 +43,71 @@ components/
 **Changes:**
 - Limit displayed projects to 3 using `.slice(0, 3)`
 - Add "View All Projects" button after the grid
+- Wrap grid and button in conditional rendering (only show button if projects exist)
 - Button styled consistently with BlogSection's "View All Posts" button
 
 **Implementation Pattern:**
 ```tsx
-const recentProjects = projects
-  .sort((a, b) => a.order - b.order)
-  .slice(0, 3);
+export function ProjectsSection() {
+  const recentProjects = projectsData
+    .sort((a, b) => a.order - b.order)
+    .slice(0, 3);
 
-// Grid rendering...
-
-{/* View All Projects Button */}
-<div className="text-center">
-  <Link href="/projects">
-    <Button 
-      variant="outline" 
-      size="lg"
-      className="group"
-      aria-label="View all projects"
+  return (
+    <SectionWrapper
+      id="projects"
+      heading="Projects"
+      description="A showcase of my recent work and coding projects"
     >
-      View All Projects
-      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-    </Button>
-  </Link>
-</div>
+      {recentProjects.length > 0 ? (
+        <>
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+            role="list"
+            aria-label="Project portfolio"
+          >
+            {recentProjects.map((project) => (
+              <div key={project.id} role="listitem">
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+
+          {/* View All Projects Button */}
+          <div className="text-center">
+            <Link href="/projects">
+              <Button 
+                variant="outline" 
+                size="lg"
+                className="group"
+                aria-label="View all projects"
+              >
+                View All Projects
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Button>
+            </Link>
+          </div>
+        </>
+      ) : (
+        /* Empty State */
+        <div className="text-center py-16">
+          <p className="text-lg text-muted-foreground">
+            No projects to display at the moment.
+          </p>
+        </div>
+      )}
+    </SectionWrapper>
+  );
+}
 ```
+
+**Key Changes:**
+- Add `mb-12` to grid for spacing before button
+- Wrap grid and button in fragment with conditional rendering
+- Maintain existing empty state
+- Import `ArrowRight` from `lucide-react`
+- Import `Button` from `@/components/ui/button`
+- Import `Link` from `next/link`
 
 ### 2. New Projects Page Component
 
@@ -80,27 +120,82 @@ const recentProjects = projects
 - Projects grid displaying all projects
 - Empty state handling
 
-**Layout Pattern (mirrors blog page):**
+**Complete Implementation Pattern (mirrors blog page):**
 ```tsx
+import { projects as projectsData } from '@/data/projects';
+import { ProjectCard } from '@/components/ui/project-card';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+
 export const metadata = {
   title: 'Projects | Melnar Ancit Cordova',
   description: 'A showcase of my work and coding projects',
 };
 
 export default function ProjectsPage() {
-  const allProjects = projects.sort((a, b) => a.order - b.order);
+  const allProjects = projectsData.sort((a, b) => a.order - b.order);
 
   return (
     <div className="min-h-screen py-16 md:py-24">
       <div className="container mx-auto px-4 max-w-7xl">
-        {/* Header with back button */}
-        {/* Projects grid */}
-        {/* Empty state */}
+        {/* Header */}
+        <div className="mb-12">
+          <Link href="/">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="mb-6 group"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              Back to Home
+            </Button>
+          </Link>
+          
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            Projects
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            A showcase of my work and coding projects. Each project demonstrates
+            different skills and technologies I've worked with.
+          </p>
+        </div>
+
+        {/* Projects Grid */}
+        {allProjects.length > 0 ? (
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            role="list"
+            aria-label="Project portfolio"
+          >
+            {allProjects.map((project) => (
+              <div key={project.id} role="listitem">
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Empty State */
+          <div className="text-center py-16">
+            <p className="text-lg text-muted-foreground">
+              No projects to display at the moment. Check back soon!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 ```
+
+**Key Implementation Details:**
+- Import `projectsData` from `@/data/projects` (avoid naming conflict with sorted array)
+- Reuse existing `ProjectCard` component
+- Match blog page structure exactly
+- Back button uses `variant="ghost"` and `size="sm"`
+- Header section has `mb-12` spacing
+- Grid has no bottom margin (unlike home page section)
+- Empty state message matches blog page pattern
 
 ## UI/UX Design
 
@@ -211,24 +306,6 @@ export default function ProjectsPage() {
 - Project images use Next.js Image component (existing)
 - SVG placeholders load instantly
 
-## Testing Strategy
-
-### Manual Testing Checklist
-- [ ] Home page displays exactly 3 projects
-- [ ] Projects sorted by order field
-- [ ] "View All Projects" button navigates to `/projects`
-- [ ] Projects page displays all 6 projects
-- [ ] Back button returns to home page
-- [ ] Responsive layout works on all breakpoints
-- [ ] Keyboard navigation functional
-- [ ] Focus states visible
-- [ ] Empty states render correctly
-- [ ] Visual consistency with blog implementation
-
-### Browser Testing
-- Chrome, Firefox, Safari, Edge
-- Mobile browsers (iOS Safari, Chrome Android)
-
 ## Implementation Notes
 
 ### Reusable Patterns
@@ -246,30 +323,17 @@ export default function ProjectsPage() {
 - No custom CSS required
 - Use `cn()` utility for conditional classes if needed
 
-## Migration Path
+## Implementation Approach
 
-### Phase 1: Update ProjectsSection
-1. Add `.slice(0, 3)` to limit projects
-2. Add "View All Projects" button with link
-3. Test home page rendering
-
-### Phase 2: Create Projects Page
-1. Create `app/projects/page.tsx`
-2. Implement layout following blog page pattern
-3. Add metadata
-4. Test navigation and rendering
-
-### Phase 3: Validation
-1. Manual testing across devices
-2. Accessibility audit
-3. Visual consistency check
+1. **Update ProjectsSection.tsx**: Add `.slice(0, 3)` and "View All Projects" button
+2. **Create app/projects/page.tsx**: Follow blog page pattern for layout and structure
+3. **Verify**: Test navigation, responsive layout, and empty states
 
 ## Success Criteria
 
 - ✅ Home page shows exactly 3 projects
-- ✅ Projects page shows all 6 projects
+- ✅ Projects page shows all projects
 - ✅ Navigation works bidirectionally
 - ✅ Visual consistency with blog implementation
-- ✅ No accessibility regressions
 - ✅ Responsive on all breakpoints
 - ✅ Empty states handled gracefully

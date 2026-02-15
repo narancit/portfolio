@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     creator: "@narancit",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 
