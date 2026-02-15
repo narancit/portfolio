@@ -1,27 +1,43 @@
-"use client"
+'use client';
 
-import { PersonalInfo, TechStack } from "@/types/portfolio"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github } from "lucide-react"
-import * as LucideIcons from "lucide-react"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+import { PersonalInfo, TechStack } from '@/types/portfolio';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ExternalLink, Github } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface HeroSectionProps {
-  personalInfo: PersonalInfo
-  techStack: TechStack[]
+  personalInfo: PersonalInfo;
+  techStack: TechStack[];
 }
 
 export function HeroSection({ personalInfo, techStack }: HeroSectionProps) {
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       className="min-h-screen flex items-center justify-center py-16 md:py-24"
       aria-label="Introduction and hero section"
     >
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center space-y-8">
+          {/* Profile Picture */}
+          {personalInfo.profileImage && (
+            <div className="flex justify-center">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary shadow-lg">
+                <Image
+                  src={personalInfo.profileImage}
+                  alt={`${personalInfo.fullName} profile picture`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
+          )}
+
           {/* Name and Title */}
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
@@ -42,7 +58,7 @@ export function HeroSection({ personalInfo, techStack }: HeroSectionProps) {
             <h2 className="text-lg md:text-xl font-semibold mb-6 text-muted-foreground">
               Tech Stack
             </h2>
-            <div 
+            <div
               className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto"
               role="list"
               aria-label="Technologies and tools"
@@ -50,31 +66,31 @@ export function HeroSection({ personalInfo, techStack }: HeroSectionProps) {
               {techStack.map((tech) => {
                 // Convert icon name to PascalCase for lucide-react
                 const iconName = tech.icon
-                  .split("-")
+                  .split('-')
                   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join("")
+                  .join('');
 
                 // Get the icon component from lucide-react
-                const IconComponent = (LucideIcons as any)[iconName] as React.ComponentType<
-                  LucideIcons.LucideProps
-                >
+                const IconComponent = (LucideIcons as any)[
+                  iconName
+                ] as React.ComponentType<LucideIcons.LucideProps>;
 
                 // Fallback to Code icon if the specified icon doesn't exist
-                const Icon = IconComponent || LucideIcons.Code
+                const Icon = IconComponent || LucideIcons.Code;
 
                 return (
-                  <Badge 
-                    key={tech.name} 
+                  <Badge
+                    key={tech.name}
                     variant="outline"
                     className={cn(
-                      "gap-1.5 px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                      'gap-1.5 px-3 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors',
                     )}
                     role="listitem"
                   >
                     <Icon size={14} aria-hidden="true" />
                     <span>{tech.name}</span>
                   </Badge>
-                )
+                );
               })}
             </div>
           </div>
@@ -97,5 +113,5 @@ export function HeroSection({ personalInfo, techStack }: HeroSectionProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

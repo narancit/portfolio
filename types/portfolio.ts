@@ -52,6 +52,7 @@ export interface PersonalInfo {
   linkedin?: string;
   twitter?: string;
   location?: string;
+  profileImage?: string;
 }
 
 export interface ContactFormData {
