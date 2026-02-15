@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,8 @@ export function Navigation() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Handle scroll to update active section and navbar background
   useEffect(() => {
@@ -24,8 +27,11 @@ export function Navigation() {
       // Update navbar background on scroll
       setIsScrolled(window.scrollY > 20);
 
+      // Only update active section based on scroll if on home page
+      if (pathname !== '/') return;
+
       // Find active section based on scroll position
-      const sections = navLinks.map(link => document.getElementById(link.id));
+      const sections = navLinks.map((link) => document.getElementById(link.id));
       const scrollPosition = window.scrollY + 100; // Offset for better UX
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -41,7 +47,7 @@ export function Navigation() {
     handleScroll(); // Call once on mount
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   // Close mobile menu when clicking outside or on a link
   useEffect(() => {
@@ -66,13 +72,47 @@ export function Navigation() {
     };
   }, [isMenuOpen]);
 
+  // Handle hash navigation when landing on home page
+  useEffect(() => {
+    if (pathname === '/' && window.location.hash) {
+      const sectionId = window.location.hash.substring(1);
+      setActiveSection(sectionId);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        setTimeout(() => {
+          const offset = 80;
+          const sectionTop = section.offsetTop - offset;
+          window.scrollTo({
+            top: sectionTop,
+            behavior: 'smooth',
+          });
+        }, 100);
+      }
+    } else if (pathname === '/') {
+      // On home page without hash, set to hero
+      setActiveSection('hero');
+    } else if (pathname.startsWith('/blog')) {
+      setActiveSection('blog');
+    } else if (pathname.startsWith('/projects')) {
+      setActiveSection('projects');
+    }
+  }, [pathname]);
+
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
+    // If not on home page, navigate to home with hash
+    if (pathname !== '/') {
+      router.push(`/#${sectionId}`);
+      setIsMenuOpen(false);
+      return;
+    }
+
+    // If on home page, scroll to section
     const section = document.getElementById(sectionId);
     if (section) {
       const offset = 80; // Account for fixed navbar height
       const sectionTop = section.offsetTop - offset;
-      
+
       window.scrollTo({
         top: sectionTop,
         behavior: 'smooth',
@@ -96,7 +136,7 @@ export function Navigation() {
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           isScrolled
             ? 'bg-background/95 backdrop-blur-sm border-b border-border'
-            : 'bg-transparent'
+            : 'bg-transparent',
         )}
         role="navigation"
         aria-label="Main navigation"
@@ -126,7 +166,7 @@ export function Navigation() {
                     'hover:text-primary hover:bg-muted',
                     activeSection === link.id
                       ? 'text-primary bg-muted'
-                      : 'text-foreground'
+                      : 'text-foreground',
                   )}
                   aria-label={`Navigate to ${link.label} section`}
                   aria-current={activeSection === link.id ? 'page' : undefined}
@@ -185,7 +225,7 @@ export function Navigation() {
                     'min-h-[44px] min-w-[44px]', // Touch target size
                     activeSection === link.id
                       ? 'text-primary bg-muted'
-                      : 'text-foreground'
+                      : 'text-foreground',
                   )}
                   aria-label={`Navigate to ${link.label} section`}
                   aria-current={activeSection === link.id ? 'page' : undefined}
