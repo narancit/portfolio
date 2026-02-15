@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Syntax highlighting for code blocks */
+@import 'highlight.js/styles/github-dark.css';
+
+@layer base {
+  :root {
+    /* Dark mode is the default theme */
+    --background: 0 0% 0%; /* Pure black #000000 */
+    --foreground: 0 0% 100%; /* Pure white #ffffff */
+    --card: 215 25% 12%; /* Dark slate #1e293b */
+    --card-foreground: 0 0% 100%;
+    --popover: 215 25% 12%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 120 100% 50%; /* Neon green #00ff00 */
+    --primary-foreground: 0 0% 0%; /* Black text on neon green */
+    --secondary: 215 20% 40%; /* Slate gray #64748b */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 215 25% 12%; /* Dark slate #1e293b */
+    --muted-foreground: 215 16% 58%; /* Light slate #94a3b8 */
+    --accent: 120 100% 50%; /* Neon green accent */
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 20% 40%; /* Slate gray border */
+    --input: 215 25% 12%; /* Dark slate input background */
+    --ring: 120 100% 50%; /* Neon green focus ring */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark mode variables (same as root since dark is default) */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 215 25% 12%;
+    --card-foreground: 0 0% 100%;
+    --popover: 215 25% 12%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 215 20% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 215 25% 12%;
+    --muted-foreground: 215 16% 58%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 20% 40%;
+    --input: 215 25% 12%;
+    --ring: 120 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Skip to content link - hidden until focused */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 100;
+  padding: 1rem 1.5rem;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
