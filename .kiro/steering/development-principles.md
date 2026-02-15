@@ -24,6 +24,9 @@
 
 ## Spec Creation Guidelines
 
+- **Always number specs sequentially** based on existing specs in `.kiro/specs/`
+- Check existing spec directories to determine the next number (e.g., if specs 1-4 exist, create spec 5)
+- Use format: `{number}-{descriptive-name}` (e.g., `5-contact-form-enhancement`)
 - Keep specs concise and focused on essential requirements
 - Avoid lengthy design documents or over-specification
 - List only the core functionality needed

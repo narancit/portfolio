@@ -1,6 +1,6 @@
 import { skillCategories as skillCategoriesData } from '@/data/skills';
 import { SectionWrapper } from '@/components/ui/SectionWrapper';
-import { cn } from '@/lib/utils';
+import { cn, calculateYearsOfExperience } from '@/lib/utils';
 
 const proficiencyConfig = {
   beginner: {
@@ -55,12 +55,17 @@ export function SkillsSection() {
               >
                 {category.skills.map((skill) => {
                   const config = proficiencyConfig[skill.proficiency];
-                  
+                  const displayYears =
+                    skill.yearsOfExperience ??
+                    (skill.experienceStartDate
+                      ? calculateYearsOfExperience(skill.experienceStartDate)
+                      : undefined);
+
                   return (
                     <div key={skill.name} role="listitem">
                       <div
                         className={cn(
-                          'flex flex-col gap-2 p-3 rounded-lg border border-muted bg-muted/20 hover:bg-muted/30 transition-colors'
+                          'flex flex-col gap-2 p-3 rounded-lg border border-muted bg-muted/20 hover:bg-muted/30 transition-colors',
                         )}
                       >
                         <div className="flex items-center justify-between">
@@ -71,18 +76,22 @@ export function SkillsSection() {
                             {config.label}
                           </span>
                         </div>
-                        
+
                         {/* Progress bar */}
                         <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
                           <div
-                            className={cn('h-full transition-all duration-300', config.color)}
+                            className={cn(
+                              'h-full transition-all duration-300',
+                              config.color,
+                            )}
                             style={{ width: `${config.percentage}%` }}
                           />
                         </div>
 
-                        {skill.yearsOfExperience && (
+                        {displayYears && (
                           <span className="text-xs text-muted-foreground">
-                            {skill.yearsOfExperience} {skill.yearsOfExperience === 1 ? 'year' : 'years'}
+                            {displayYears}{' '}
+                            {displayYears === 1 ? 'year' : 'years'}
                           </span>
                         )}
                       </div>
@@ -104,4 +113,3 @@ export function SkillsSection() {
     </SectionWrapper>
   );
 }
-

@@ -7,7 +7,6 @@ export const techStack: TechStack[] = [
   // Frameworks
   { name: "React", icon: "atom", category: "framework" },
   { name: "Next.js", icon: "layout", category: "framework" },
-  { name: "Node.js", icon: "server", category: "framework" },
 
   // Languages
   { name: "TypeScript", icon: "code", category: "language" },

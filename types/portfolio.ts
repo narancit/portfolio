@@ -24,6 +24,7 @@ export interface Skill {
   category: string;
   proficiency: 'beginner' | 'intermediate' | 'advanced' | 'expert';
   yearsOfExperience?: number;
+  experienceStartDate?: string; // ISO date string (YYYY-MM-DD)
 }
 
 export interface SkillCategory {
