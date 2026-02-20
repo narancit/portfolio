@@ -1,8 +1,15 @@
 import { Project } from '@/types/portfolio';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, FolderCode } from 'lucide-react';
 import Image from 'next/image';
 
 interface ProjectCardProps {
@@ -10,11 +17,14 @@ interface ProjectCardProps {
   showLongDescription?: boolean;
 }
 
-export function ProjectCard({ project, showLongDescription = false }: ProjectCardProps) {
+export function ProjectCard({
+  project,
+  showLongDescription = false,
+}: ProjectCardProps) {
   return (
     <Card className="group h-full flex flex-col transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20">
-      {project.imageUrl && (
-        <div className="relative w-full h-48 overflow-hidden rounded-t-lg">
+      <div className="relative w-full h-48 overflow-hidden rounded-t-lg bg-card">
+        {project.imageUrl ? (
           <Image
             src={project.imageUrl}
             alt={`Screenshot of ${project.title} project`}
@@ -22,9 +32,16 @@ export function ProjectCard({ project, showLongDescription = false }: ProjectCar
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
-        </div>
-      )}
-      
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-muted/50">
+            <FolderCode
+              className="h-20 w-20 text-primary/30"
+              aria-hidden="true"
+            />
+          </div>
+        )}
+      </div>
+
       <CardHeader>
         <CardTitle className="text-xl group-hover:text-primary transition-colors">
           {project.title}
@@ -38,12 +55,16 @@ export function ProjectCard({ project, showLongDescription = false }: ProjectCar
           </CardDescription>
         )}
       </CardHeader>
-      
+
       <CardContent className="flex-1">
-        <div className="flex flex-wrap gap-2" role="list" aria-label="Technologies used">
+        <div
+          className="flex flex-wrap gap-2"
+          role="list"
+          aria-label="Technologies used"
+        >
           {project.technologies.map((tech) => (
-            <Badge 
-              key={tech} 
+            <Badge
+              key={tech}
               variant="secondary"
               className="text-xs"
               role="listitem"
@@ -53,15 +74,10 @@ export function ProjectCard({ project, showLongDescription = false }: ProjectCar
           ))}
         </div>
       </CardContent>
-      
+
       <CardFooter className="gap-2">
         {project.liveUrl && (
-          <Button
-            variant="default"
-            size="sm"
-            asChild
-            className="flex-1"
-          >
+          <Button variant="default" size="sm" asChild className="flex-1">
             <a
               href={project.liveUrl}
               target="_blank"
@@ -74,14 +90,9 @@ export function ProjectCard({ project, showLongDescription = false }: ProjectCar
             </a>
           </Button>
         )}
-        
+
         {project.repoUrl && (
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="flex-1"
-          >
+          <Button variant="outline" size="sm" asChild className="flex-1">
             <a
               href={project.repoUrl}
               target="_blank"
