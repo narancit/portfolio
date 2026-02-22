@@ -2,6 +2,17 @@ import { Project } from '@/types/portfolio';
 
 export const projects: Project[] = [
   {
+    id: 'url-generator',
+    title: 'URL Generator',
+    description: 'Build URLs with query parameters interactively',
+    longDescription:
+      'A URL builder tool that enables users to construct URLs with query parameters interactively. Features include real-time URL generation with proper encoding, one-click clipboard copy, automatic persistence to localStorage, and history management for quick access to previously created URLs.',
+    technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
+    liveUrl: '/projects/url-generator',
+    featured: false,
+    order: 1,
+  },
+  {
     id: 'password-generator',
     title: 'Password Generator',
     description:
@@ -11,7 +22,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
     liveUrl: '/projects/password-generator',
     featured: false,
-    order: 1,
+    order: 2,
   },
   {
     id: 'project-1',
@@ -24,6 +35,6 @@ export const projects: Project[] = [
     liveUrl: 'https://nah-game-on.base44.app/',
     imageUrl: '/images/projects/boredombingo.png',
     featured: true,
-    order: 1,
+    order: 3,
   },
 ];

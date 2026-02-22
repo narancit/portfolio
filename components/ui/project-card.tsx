@@ -46,17 +46,6 @@ export function ProjectCard({
         <CardTitle className="text-xl group-hover:text-primary transition-colors">
           {project.title}
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
-          {project.description}
-        </CardDescription>
-        {showLongDescription && project.longDescription && (
-          <CardDescription className="text-muted-foreground mt-2">
-            {project.longDescription}
-          </CardDescription>
-        )}
-      </CardHeader>
-
-      <CardContent className="flex-1">
         <div
           className="flex flex-wrap gap-2"
           role="list"
@@ -73,6 +62,17 @@ export function ProjectCard({
             </Badge>
           ))}
         </div>
+      </CardHeader>
+
+      <CardContent className="flex-1">
+        <CardDescription className="text-muted-foreground">
+          {project.description}
+        </CardDescription>
+        {showLongDescription && project.longDescription && (
+          <CardDescription className="text-muted-foreground mt-2">
+            {project.longDescription}
+          </CardDescription>
+        )}
       </CardContent>
 
       <CardFooter className="gap-2">
