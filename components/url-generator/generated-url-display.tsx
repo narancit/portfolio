@@ -48,35 +48,26 @@ export function GeneratedUrlDisplay({
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium" id="generated-url-heading">
-          Generated URL
-        </h3>
-        {copySuccess && (
-          <Badge
-            variant="default"
-            className="bg-primary text-primary-foreground"
-            role="status"
-            aria-live="polite"
-          >
-            <Check className="mr-1 h-3 w-3" />
-            Copied!
-          </Badge>
-        )}
-      </div>
+      <h3 className="text-sm font-medium" id="generated-url-heading">
+        Generated URL
+      </h3>
 
       <Card className="border-2">
-        <CardContent className="p-3 sm:p-4">
+        <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <div className="flex-1 min-w-0">
-              <Input
-                value={url}
-                readOnly
-                className="font-mono text-sm bg-background border-0 focus-visible:ring-0 px-0"
-                placeholder="Your generated URL will appear here"
-                aria-label="Generated URL output"
-                aria-describedby="generated-url-heading"
-              />
+              {url ? (
+                  <p
+                    className="font-mono text-lg break-all text-foreground"
+                    aria-label="Generated password"
+                  >
+                    {url}
+                  </p>
+                ) : (
+                  <p className="text-muted-foreground italic">
+                    No URL generated yet
+                  </p>
+                )}
             </div>
 
             {/* Copy button */}

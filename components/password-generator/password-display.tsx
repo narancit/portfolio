@@ -2,32 +2,28 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, RefreshCw } from 'lucide-react';
 
 interface PasswordDisplayProps {
   password: string;
   onCopy: () => void;
+  onRegenerate: () => void;
   copySuccess: boolean;
 }
 
 export function PasswordDisplay({
   password,
   onCopy,
+  onRegenerate,
   copySuccess,
 }: PasswordDisplayProps) {
   return (
     <>
-      {/* Success message */}
-      {copySuccess && (
-        <p className="text-sm text-green-500" role="status" aria-live="polite">
-          Password copied to clipboard!
-        </p>
-      )}
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="p-4">
           <div className="space-y-4">
             {/* Password display area */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className="flex-1 min-w-0">
                 {password ? (
                   <p
@@ -43,23 +39,37 @@ export function PasswordDisplay({
                 )}
               </div>
 
-              {/* Copy button */}
-              <Button
-                onClick={onCopy}
-                disabled={!password}
-                size="icon"
-                variant="outline"
-                aria-label={
-                  copySuccess ? 'Password copied' : 'Copy password to clipboard'
-                }
-                className="shrink-0"
-              >
-                {copySuccess ? (
-                  <Check className="h-4 w-4 text-green-500" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
-              </Button>
+              {/* Action buttons */}
+              <div className="flex items-center gap-1 shrink-0">
+                <Button
+                  onClick={onRegenerate}
+                  disabled={!password}
+                  size="icon"
+                  variant="outline"
+                  aria-label="Generate new password"
+                  title="Generate new password"
+                  className="h-10 w-10"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
+                <Button
+                  onClick={onCopy}
+                  disabled={!password}
+                  size="icon"
+                  variant={copySuccess ? 'default' : 'outline'}
+                  aria-label={
+                    copySuccess ? 'Password copied' : 'Copy password to clipboard'
+                  }
+                  title={copySuccess ? 'Password copied' : 'Copy to clipboard'}
+                  className="h-10 w-10"
+                >
+                  {copySuccess ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
