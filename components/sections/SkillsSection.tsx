@@ -5,12 +5,12 @@ import { cn, calculateYearsOfExperience } from '@/lib/utils';
 const proficiencyConfig = {
   beginner: {
     percentage: 25,
-    color: 'bg-slate-500',
+    color: 'bg-muted-foreground/50',
     label: 'Beginner',
   },
   intermediate: {
     percentage: 50,
-    color: 'bg-blue-500',
+    color: 'bg-secondary',
     label: 'Intermediate',
   },
   advanced: {

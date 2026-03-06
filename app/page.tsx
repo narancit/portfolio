@@ -8,7 +8,7 @@ import { techStack } from "@/data/tech-stack"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <HeroSection personalInfo={personalInfo} techStack={techStack} />
       <ProjectsSection />
       <SkillsSection />

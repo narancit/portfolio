@@ -10,7 +10,7 @@ interface MarkdownRendererProps {
 
 export function MarkdownRenderer({ content, className = '' }: MarkdownRendererProps) {
   return (
-    <div className={`prose prose-invert prose-green max-w-none ${className}`}>
+    <div className={`prose prose-stone max-w-none ${className}`}>
       <ReactMarkdown
         rehypePlugins={[rehypeHighlight]}
       >

@@ -203,12 +203,11 @@ export function Navigation() {
       {isMenuOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden fixed inset-0 z-40"
+          className="md:hidden fixed inset-0 z-40 bg-background/90"
           aria-hidden={!isMenuOpen}
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.75)',
-            backdropFilter: 'blur(16px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
           }}
         >
           <div className="container mx-auto px-4 pt-24 pb-8 h-full overflow-y-auto">
