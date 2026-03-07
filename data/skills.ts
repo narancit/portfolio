@@ -90,6 +90,12 @@ export const skillCategories: SkillCategory[] = [
         yearsOfExperience: 1,
       },
       {
+        name: 'Claude Code',
+        category: 'Tools & Platforms',
+        proficiency: 'beginner',
+        yearsOfExperience: 1,
+      },
+      {
         name: 'AWS',
         category: 'Tools & Platforms',
         proficiency: 'beginner',
